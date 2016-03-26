@@ -1,0 +1,19 @@
+---
+
+- name: Create user
+  postgresql_user:
+    name: "{{ pgsqldb_user }}"
+    password: "{{ pgsqldb_password }}"
+    state: present
+  delegate_to: "{{ pgsqldb_login_host }}"
+  become: yes
+  become_user: postgres
+
+- name: Create database
+  postgresql_db:
+    name: "{{ pgsqldb_name }}"
+    owner: "{{ pgsqldb_user }}"
+    state: present
+  delegate_to: "{{ pgsqldb_login_host }}"
+  become: yes
+  become_user: postgres
